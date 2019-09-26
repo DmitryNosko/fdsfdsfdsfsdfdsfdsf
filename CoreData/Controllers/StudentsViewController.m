@@ -67,27 +67,27 @@ static NSString* STUDENT_ENTITY_NAME = @"Student";
 //                                                              }];
 //                                                              [thread start];
                                                               
-                                                              NSManagedObjectContext *parentContext = [self.fetchedResultsController managedObjectContext];
-                                                              NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-                                                              [childContext setParentContext:parentContext];
-                                                              
-                                                              [[DBNewSchoolManagerService sharedDBNewSchoolManagerService] addStudentWithFirstName:firstNameTextField.text lastName:lastNameTextField.text score:scoreTextField.text.doubleValue university:self.university andContext:self.managedObjectContext];
-                                                              
-                                                              [childContext performBlock:^{
-                                                                  
-                                                                  NSError* error = nil;
-                                                                  if (![childContext save:&error]) {
-                                                                      NSLog(@"Error saving context = %@ %@", [error localizedDescription], [error userInfo]);
-                                                                      abort();
-                                                                  }
-                                                                  [parentContext performBlockAndWait:^{
-                                                                      NSError *error = nil;
-                                                                      if (![parentContext save:&error]) {
-                                                                          NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
-                                                                          abort();
-                                                                      }
-                                                                  }];
-                                                              }];
+//                                                              NSManagedObjectContext *parentContext = [self.fetchedResultsController managedObjectContext];
+//                                                              NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+//                                                              [childContext setParentContext:parentContext];
+//                                                              
+//                                                              [[DBNewSchoolManagerService sharedDBNewSchoolManagerService] addStudentWithFirstName:firstNameTextField.text lastName:lastNameTextField.text score:scoreTextField.text.doubleValue university:self.university andContext:self.managedObjectContext];
+//                                                              
+//                                                              [childContext performBlock:^{
+//                                                                  
+//                                                                  NSError* error = nil;
+//                                                                  if (![childContext save:&error]) {
+//                                                                      NSLog(@"Error saving context = %@ %@", [error localizedDescription], [error userInfo]);
+//                                                                      abort();
+//                                                                  }
+//                                                                  [parentContext performBlockAndWait:^{
+//                                                                      NSError *error = nil;
+//                                                                      if (![parentContext save:&error]) {
+//                                                                          NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+//                                                                          abort();
+//                                                                      }
+//                                                                  }];
+//                                                              }];
                                                               
                                                           } else {
                                                               NSLog(@"exeption");

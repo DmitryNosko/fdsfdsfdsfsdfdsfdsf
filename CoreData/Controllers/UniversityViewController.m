@@ -15,7 +15,6 @@
 #import "StudentsViewController.h"
 
 @interface UniversityViewController ()
-@property (strong, nonatomic) UISegmentedControl* contextSwither;
 @end
 
 static NSString* UNIVERSITY_ENTITY_NAME = @"University";
@@ -50,40 +49,43 @@ static NSString* UNIVERSITY_ENTITY_NAME = @"University";
                                                          
                                                          if (![nameTextField.text isEqualToString:@""]) {
                                                              
-//                                                             University* university = [[DBOldSchoolManager sharedDBManager] addUniversityWithName:nameTextField.text];
-//                                                             NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-//                                                             [context insertObject:university];
-//
-//                                                             NSThread* thread = [[NSThread alloc] initWithBlock:^{
-//                                                                 NSError *error = nil;
-//                                                                 if (![context save:&error]) {
-//                                                                     NSLog(@"Unresolved error %@, %@", error, error.userInfo);
-//                                                                     abort();
-//                                                                 }
-//                                                             }];
-//                                                             [thread start];
-                                                             
-                                                             NSManagedObjectContext *parentContext = [self.fetchedResultsController managedObjectContext];
-                                                             NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-                                                             [childContext setParentContext:parentContext];
-                                                             
-                                                             [[DBNewSchoolManagerService sharedDBNewSchoolManagerService] addUniversityWithName:nameTextField.text andContext:childContext];
-                                                             
-                                                             [childContext performBlock:^{
-                                                                
-                                                                 NSError* error = nil;
-                                                                 if (![childContext save:&error]) {
-                                                                     NSLog(@"Error saving context = %@ %@", [error localizedDescription], [error userInfo]);
-                                                                     abort();
-                                                                 }
-                                                                 [parentContext performBlockAndWait:^{
+                                                             if (self.dataSourceStrategyID == 0) {
+                                                                 University* university = [self.dbSchoolManagerService addUniversityWithName:nameTextField.text];
+                                                                 NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+                                                                 [context insertObject:university];
+                                                                 
+                                                                 NSThread* thread = [[NSThread alloc] initWithBlock:^{
                                                                      NSError *error = nil;
-                                                                     if (![parentContext save:&error]) {
-                                                                         NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+                                                                     if (![context save:&error]) {
+                                                                         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
                                                                          abort();
                                                                      }
                                                                  }];
-                                                             }];
+                                                                 [thread start];
+                                                             } else {
+                                                                 
+                                                                 NSManagedObjectContext *parentContext = [self.fetchedResultsController managedObjectContext];
+                                                                 NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+                                                                 [childContext setParentContext:parentContext];
+                                                                 
+                                                                 [self.dbSchoolManagerService addUniversityWithName:nameTextField.text andContext:childContext];
+                                                                 
+                                                                 [childContext performBlock:^{
+                                                                     
+                                                                     NSError* error = nil;
+                                                                     if (![childContext save:&error]) {
+                                                                         NSLog(@"Error saving context = %@ %@", [error localizedDescription], [error userInfo]);
+                                                                         abort();
+                                                                     }
+                                                                     [parentContext performBlockAndWait:^{
+                                                                         NSError *error = nil;
+                                                                         if (![parentContext save:&error]) {
+                                                                             NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+                                                                             abort();
+                                                                         }
+                                                                     }];
+                                                                 }];
+                                                             }
                                                              
                                                          } else {
                                                              NSLog(@"exeption");
@@ -139,21 +141,6 @@ static NSString* UNIVERSITY_ENTITY_NAME = @"University";
     StudentsViewController* svc = [[StudentsViewController alloc] init];
     svc.university = university;
     [self.navigationController pushViewController:svc animated:YES];
-}
-
-#pragma mark - ViewCotrollerSetUp
-
-- (void) setUpViewController {
-    
-    self.contextSwither = [[UISegmentedControl alloc] initWithItems:@[@"old school", @"new school"]];
-    [self.contextSwither addTarget:self action:@selector(changeStorage:) forControlEvents:UIControlEventValueChanged];
-    
-    self.navigationItem.titleView = self.contextSwither;
-}
-
-- (void) changeStorage:(UISegmentedControl *) sender {
-    NSNumber* dataSourceStrategyID = @(sender.selectedSegmentIndex);
-    NSLog(@"swithed = %@", dataSourceStrategyID);
 }
 
 @end

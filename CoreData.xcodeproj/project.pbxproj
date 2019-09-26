@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7808F50B233CE6FF00A20F61 /* DataBaseManagerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7808F50A233CE6FF00A20F61 /* DataBaseManagerFactory.m */; };
 		7865E959233A464400111BF3 /* DBOldSchoolManagerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7865E958233A464400111BF3 /* DBOldSchoolManagerService.m */; };
 		7865E985233A530800111BF3 /* CoreDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7865E984233A530800111BF3 /* CoreDataViewController.m */; };
 		7865E988233A58F300111BF3 /* UniversityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7865E987233A58F300111BF3 /* UniversityViewController.m */; };
@@ -25,7 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7808F508233CDA1400A20F61 /* dataBaseManagerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dataBaseManagerProtocol.h; sourceTree = "<group>"; };
+		7808F508233CDA1400A20F61 /* DataBaseManagerServiceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataBaseManagerServiceProtocol.h; sourceTree = "<group>"; };
+		7808F509233CE6FF00A20F61 /* DataBaseManagerFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataBaseManagerFactory.h; sourceTree = "<group>"; };
+		7808F50A233CE6FF00A20F61 /* DataBaseManagerFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataBaseManagerFactory.m; sourceTree = "<group>"; };
 		7865E957233A464400111BF3 /* DBOldSchoolManagerService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBOldSchoolManagerService.h; sourceTree = "<group>"; };
 		7865E958233A464400111BF3 /* DBOldSchoolManagerService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBOldSchoolManagerService.m; sourceTree = "<group>"; };
 		7865E983233A530800111BF3 /* CoreDataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataViewController.h; sourceTree = "<group>"; };
@@ -69,6 +72,8 @@
 		7808F506233CD9A600A20F61 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
+				7808F509233CE6FF00A20F61 /* DataBaseManagerFactory.h */,
+				7808F50A233CE6FF00A20F61 /* DataBaseManagerFactory.m */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -76,7 +81,7 @@
 		7808F507233CD9BA00A20F61 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				7808F508233CDA1400A20F61 /* dataBaseManagerProtocol.h */,
+				7808F508233CDA1400A20F61 /* DataBaseManagerServiceProtocol.h */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 				CE67088A2339421B00D3DFBC /* AppDelegate.m in Sources */,
 				7865E959233A464400111BF3 /* DBOldSchoolManagerService.m in Sources */,
 				CE78464923394E8B00F524FF /* University+CoreDataClass.m in Sources */,
+				7808F50B233CE6FF00A20F61 /* DataBaseManagerFactory.m in Sources */,
 				7865E98E233B60F100111BF3 /* StudentsViewController.m in Sources */,
 				CE67089B2339422200D3DFBC /* main.m in Sources */,
 				CE78464723394E8B00F524FF /* Student+CoreDataClass.m in Sources */,

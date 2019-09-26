@@ -9,6 +9,7 @@
 #import "CoreDataViewController.h"
 //#import "DBOldSchoolManager.h"
 #import "DBNewSchoolManagerService.h"
+#import "DataBaseManagerFactory.h"
 
 
 @interface CoreDataViewController ()
@@ -16,6 +17,7 @@
 @end
 
 static NSString* CELL_IDENTIFIER = @"Cell";
+static NSNumber* DEFAULT_CONTEXT_INDEX = 0;
 
 @implementation CoreDataViewController
 
@@ -23,14 +25,23 @@ static NSString* CELL_IDENTIFIER = @"Cell";
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
+        
     }
     return self;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setUpViewController];
+    
+    NSNumber* storageStrategyID = @(self.contextSwither.selectedSegmentIndex);
+    self.dbSchoolManagerService = [[DataBaseManagerFactory sharedDataBaseManagerFactory] dataBaseManagerProtocol:storageStrategyID];
 }
 
 - (NSManagedObjectContext *) managedObjectContext {
     if (!_managedObjectContext) {
+        _managedObjectContext = [self.dbSchoolManagerService managedObjectContext];
         //_managedObjectContext = [[DBOldSchoolManager sharedDBManager] managedObjectContext];
-        _managedObjectContext = [[DBNewSchoolManagerService sharedDBNewSchoolManagerService] managedObjectContext];
+        //_managedObjectContext = [[DBNewSchoolManagerService sharedDBNewSchoolManagerService] managedObjectContext];
     }
     
     return _managedObjectContext;
@@ -96,6 +107,34 @@ static NSString* CELL_IDENTIFIER = @"Cell";
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *) indexPath {
+}
+
+#pragma mark - ViewCotrollerSetUp
+
+- (void) setUpViewController {
+    
+    self.contextSwither = [[UISegmentedControl alloc] initWithItems:@[@"old school", @"new school"]];
+    [self.contextSwither addTarget:self action:@selector(changeContext:) forControlEvents:UIControlEventValueChanged];
+    
+    if ([NSUserDefaults.standardUserDefaults objectForKey:@"dataSourceStrategyID"]) {
+        [self.contextSwither setSelectedSegmentIndex:[[NSUserDefaults.standardUserDefaults objectForKey:@"dataSourceStrategyID"] integerValue]];
+    } else {
+        [self.contextSwither setSelectedSegmentIndex:0];
+        [NSUserDefaults.standardUserDefaults setObject:DEFAULT_CONTEXT_INDEX forKey:@"dataSourceStrategyID"];
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
+    
+    self.navigationItem.titleView = self.contextSwither;
+}
+
+- (void) changeContext:(UISegmentedControl *) sender {
+    self.dataSourceStrategyID = @(sender.selectedSegmentIndex);
+    self.dbSchoolManagerService = [[DataBaseManagerFactory sharedDataBaseManagerFactory] dataBaseManagerProtocol:self.dataSourceStrategyID];
+    self.managedObjectContext = [self.dbSchoolManagerService managedObjectContext];
+    
+    //notify about changeContext
+    [NSUserDefaults.standardUserDefaults setObject:self.dataSourceStrategyID forKey:@"dataSourceStrategyID"];
+    [NSUserDefaults.standardUserDefaults synchronize];
 }
 
 @end

@@ -11,7 +11,12 @@
 #import "University+CoreDataClass.h"
 #import "Student+CoreDataClass.h"
 
-@protocol dataBaseManagerProtocol <NSObject>
+@protocol DataBaseManagerServiceProtocol <NSObject>
+
+@property (readonly, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, strong) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong) NSManagedObjectModel *managedObjectModel;
+
 - (void)saveContext;
 - (void) printAllObjects;
 - (void) deleteAllObjects;
@@ -23,5 +28,6 @@
 - (void) deleteUniversity:(University *) university;
 - (University *) addUniversityWithName:(NSString *) name andContext:(NSManagedObjectContext *) context;
 - (Student *) addStudentWithFirstName:(NSString *) firstName lastName:(NSString *) lastName score:(double) score andContext:(NSManagedObjectContext *) context;
+
 @end
 

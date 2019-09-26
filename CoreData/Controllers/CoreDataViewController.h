@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "CoreData/CoreData.h"
+#import "DataBaseManagerServiceProtocol.h"
 
 @interface CoreDataViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController* fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext* managedObjectContext;
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *) indexPath;
+@property (strong, nonatomic) UISegmentedControl* contextSwither;
+@property (strong, nonatomic) NSNumber* dataSourceStrategyID;
 
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *) indexPath;
+@property (strong, nonatomic) id<DataBaseManagerServiceProtocol> dbSchoolManagerService;
 @end

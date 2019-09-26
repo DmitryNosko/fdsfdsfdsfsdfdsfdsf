@@ -10,11 +10,9 @@
 #import "Student+CoreDataClass.h"
 #import "University+CoreDataClass.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface Student (CoreDataProperties)
 
-+ (NSFetchRequest<Student *> *)fetchRequest;
++ (NSFetchRequest<Student *> *) fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *firstName;
 @property (nullable, nonatomic, copy) NSString *lastName;
@@ -22,5 +20,3 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) University *university;
 
 @end
-
-NS_ASSUME_NONNULL_END

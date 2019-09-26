@@ -13,8 +13,6 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-
-
 - (instancetype)init
 {
     self = [super init];
@@ -23,6 +21,7 @@
     }
     return self;
 }
+
 static DBOldSchoolManagerService* shared;
 +(instancetype) sharedDBOldSchoolManagerService {
     static dispatch_once_t onceToken;
@@ -107,10 +106,11 @@ static DBOldSchoolManagerService* shared;
     return student;
 }
 
-- (Student *) addStudentWithFirstName:(NSString *) firstName lastName:(NSString *) lastName score:(double) score andContext:(NSManagedObjectContext *) context {
+- (Student *) addStudentWithFirstName:(NSString *) firstName lastName:(NSString *) lastName score:(double) score university:(University *) university andContext:(NSManagedObjectContext *) context {
     Student* student = [NSEntityDescription insertNewObjectForEntityForName:@"Student" inManagedObjectContext:context];
     [student setValue:firstName forKey:@"firstName"];
     [student setValue:lastName forKey:@"lastName"];
+    [student setValue:university forKey:@"university"];
     return student;
 }
 
@@ -177,7 +177,6 @@ static DBOldSchoolManagerService* shared;
     
     return _managedObjectContext;
 }
-
 
 - (NSManagedObjectModel *)managedObjectModel {
     if (_managedObjectModel != nil) {

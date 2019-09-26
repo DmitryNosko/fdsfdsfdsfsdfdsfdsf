@@ -14,6 +14,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 static DBNewSchoolManagerService* shared;
+
 +(instancetype) sharedDBNewSchoolManagerService {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -85,6 +86,7 @@ static DBNewSchoolManagerService* shared;
     [student setValue:university forKey:@"university"];
     return student;
 }
+
 
 #pragma mark - DELETE ALL STUDENT, 1 STUDENT, ALL UNIVERSITY, 1 UNIVERSITY
 
@@ -193,5 +195,6 @@ static DBNewSchoolManagerService* shared;
         abort();
     }
 }
+
 
 @end
